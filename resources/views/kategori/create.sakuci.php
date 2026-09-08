@@ -11,6 +11,5 @@
             <input type="text" name="keterangan" id="keterangan" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
-        <button type="button" class="btn btn-secondary" onclick="window.location='{{ route('kategori.index') }}'">Batal</button>
     </form>
 @endsection
