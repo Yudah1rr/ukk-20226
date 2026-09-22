@@ -18,7 +18,7 @@
             @php
                 $no = 1;
             @endphp
-            @foreach ($data as $d)
+            @foreach ($datal as $d)
                 <tr>
                     <td>{{ $no++ }}</td>
                      <td>{{ $d->nama_alat }}</td>
@@ -36,6 +36,6 @@
             @endforeach
         </tbody>
     </table>
-    {!! $data->links() !!}
+    {!! $datal->links() !!}
 </div>
 @endsection

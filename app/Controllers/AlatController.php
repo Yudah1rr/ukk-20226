@@ -48,4 +48,11 @@ class AlatController extends Controller
 
         return redirect()->route('alat.index')->with('success', 'alat berhasil dihapus.');
     }
+    public function destroy(Request $request, $id)
+    {
+        $alat = alat::findOrFail($id);
+        $alat->delete();
+
+        return redirect()->route('alat.index')->with('success', 'alat berhasil dihapus.');
+    }
 }
