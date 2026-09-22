@@ -9,6 +9,8 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Nama Kategori</th>
+                <th>Kode Kategori</th>
                 <th>Keterangan</th>
                 <th>Aksi</th>
             </tr>
@@ -17,13 +19,15 @@
             @php
                 $no = 1;
             @endphp
-            @foreach ($data as $kategori)
+            @foreach ($data as $d)
                 <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{ $kategori->nama_kategori }}</td>
+                     <td>{{ $d->nama_kategori }}</td>
+                    <td>{{ $d->kode_kategori }}</td>
+                     <td>{{ $d->keterangan }}</td>
                     <td>
-                        <a href="{{ route('kategori.edit', ['id' => $kategori->id_kategori]) }}" class="btn btn-success btn-sm">Edit</a>
-                        <form action="{{ route('kategori.destroy', ['id' => $kategori->id_kategori]) }}" method="POST" style="display: inline-block;">
+                        <a href="{{ route('kategori.edit', ['kategori' => $d->id_kategori]) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('kategori.destroy', ['kategori' => $d->id_kategori]) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">Hapus</button>

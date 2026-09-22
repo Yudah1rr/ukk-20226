@@ -1,12 +1,12 @@
-﻿/*
+/*
 | Lapisan tema di atas Bootstrap.
 | Bootstrap dimuat lebih dulu, file ini hanya menimpa seperlunya.
 */
 
 :root {
-    --brand: #c2410c;
-    --brand-dark: #9a3412;
-    --brand-subtle: #fff7ed;
+    --brand: #207ac4;
+    --brand-dark: #1323b4;
+    --brand-subtle: #aa732f;
 }
 
 body {
@@ -79,7 +79,7 @@ body {
 }
 
 .logo-ring {
-    fill: #000000;
+    fill: #991212;
     transition: fill .15s ease;
 }
 
