@@ -10,10 +10,8 @@ class KategoriController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Kategori::orderBy('id_kategori','desc')
-        
-        ->paginate(10);
-        return view('kategori.index', compact('data'));
+        $data = Kategori::orderBy('id_kategori', 'desc')->paginate(4);
+       return view('kategori.index', compact('data'));
     }
     public function create(Request $request)
     {
@@ -21,48 +19,32 @@ class KategoriController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-            'keterangan' => 'required|string|max:255',
-            'kode_kategori' => 'required|string|max:255',
+        $data = $request->validate([
+            'nama_kategori' => 'required|min:3|max:100',
+            'kode_kategori' => 'required|varchar|min:3|max:100',
+            'keterangan' => 'required|min:3|max:255',
         ]);
-
-        Kategori::create([
-            'nama_kategori' => $request->input('nama_kategori'),
-            'keterangan' => $request->input('keterangan'),
-            'kode_kategori' => $request->input('kode_kategori'),
-        ]);
-
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan.');
-
+        Kategori::create($data);
+        return redirect(route('kategori.index'))->with('success', 'Kategori berhasil ditambahkan.');
     }
-    public function edit(Request $request, $id)
-    {
-        $kategori = Kategori::findOrFail($id);
-        return view('kategori.edit', compact('kategori'));
+
+   public function edit(Request $request, $id_kategori)
+{
+    $data = Kategori::findOrFail($id_kategori);
+    return view('kategori.edit', compact('data'));
 }
-    public function update(Request $request, $id)
+
+    public function update (Request $request, $id_kategori)
     {
-        $request->validate([
-             'nama_kategori' => 'required|string|max:255',
-            'keterangan' => 'required|string|max:255',
-             'kode_kategori' => 'required|string|max:255',
-        ]);
+        $data = $request->all();
 
-        $kategori = Kategori::findOrFail($id);
-        $kategori->update([
-            'nama_kategori' => $request->input('nama_kategori'),
-            'keterangan' => $request->input('keterangan'),
-            'kode_kategori' => $request->input('kode_kategori'),
-        ]);
-        
-
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui.');
+        $kategori = kategori::FindOrfail($id_kategori);
+        $kategori->update($data);
+        return redirect(route('kategori.index'))->with('success', 'kategori berhasil diubah');
     }
-
-    public function destroy(Request $request, $id)
+   public function delete(Request $request, $id_kategori)
     {
-        $kategori = Kategori::findOrFail($id);
+        $kategori = Kategori::findOrFail($id_kategori);
         $kategori->delete();
 
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');

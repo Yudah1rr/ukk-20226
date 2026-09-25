@@ -10,12 +10,12 @@
                     $dbConnected = false;
                 }
             @endphp
-            <button id="themeToggle" type="button" class="logo-toggle"
-                    aria-label="Ganti tema terang/gelap (status database: {{ $dbConnected ? 'terhubung' : 'tidak terhubung' }})"
+            <!-- Tombol Theme Toggle dengan Ikon Bulan -->
+            <button id="themeToggle" type="button" class="logo-toggle btn btn-link p-0 text-decoration-none"
+                    aria-label="Ganti tema terang/gelap"
                     title="Ganti tema terang/gelap">
-                <svg width="28" height="28" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block;" aria-hidden="true">
-                    <circle class="logo-ring" cx="16" cy="16" r="15"/>
-                    <circle cx="16" cy="16" r="9" fill="{{ $dbConnected ? '#28a745' : '#dc3545' }}"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-body" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
             </button>
             <a class="navbar-brand fw-semibold m-0" href="{{ route('home') }}">{{ config('app.name') }}</a>
@@ -34,12 +34,7 @@
                     <a class="nav-link {{ is_route('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ is_route('kategori.index') ? 'active' : '' }}" 
-                    href="{{ route('kategori.index') }}">Kategori</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ is_route('alat.index') ? 'active' : '' }}" 
-                    href="{{ route('alat.index') }}">Alat</a>
+                    <a class="nav-link {{ is_route('peminjaman.index') ? 'active' : '' }}" href="{{ route('peminjaman.index') }}">Ydh1rr</a>
                 </li>
                 @php
                     $currentUser = \App\Models\User::current();

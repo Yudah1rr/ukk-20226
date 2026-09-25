@@ -1,4 +1,4 @@
-  <?php
+<?php
 
 use App\Controllers\Core\AuthController;
 use App\Controllers\Core\DashboardController;
@@ -6,6 +6,9 @@ use App\Controllers\Core\DatabaseController;
 use App\Controllers\Core\DocsController;
 use App\Controllers\Core\RoleController;
 use App\Controllers\Core\UserController;
+use App\Controllers\KategoriController;
+use App\Controllers\AlatController;
+use App\Controllers\PeminjamanController;
 use Sakuci\Route;
 
 /*
@@ -45,31 +48,35 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', [DashboardController::class, 'admin'])->name('admin.dashboard');
 
-    
     Route::get('/roles', [RoleController::class, 'index'])->name('admin.roles.index');
     Route::post('/roles', [RoleController::class, 'store'])->name('admin.roles.store');
     Route::put('/roles/{role}', [RoleController::class, 'update'])->name('admin.roles.update');
     Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
-    
+
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::post('/users', [UserController::class, 'store'])->name('admin.users.store');
-    
+
     Route::get('/database/export', [DatabaseController::class, 'export'])->name('admin.database.export');
-    
-    //Kategori routes
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
     Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
     Route::post('/kategori/store', [KategoriController::class, 'store'])->name('kategori.store');
-    Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
-    Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
-    Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+    Route::get('/kategori/{id_kategori}/edit', [kategoriController::class, 'edit'] )->name('kategori.edit');
+    Route::put('/kategori/{id_kategori}', [kategoriController::class, 'update'] )->name('kategori.update');
+    Route::delete('/kategori/{id_kategori}', [kategoriController::class, 'delete'] )->name('kategori.delete');
 
-     Route::get('/alat', [AlatController::class, 'index'])->name('alat.index');
-    Route::get('/alat/create', [AlatController::class, 'create'])->name('alat.create');
-    Route::post('/alat/store', [AlatController::class, 'store'])->name('alat.store');
-    Route::get('/alat/{id}/edit', [AlatController::class, 'edit'])->name('alat.edit');
-    Route::put('/alat/{id}', [AlatController::class, 'update'])->name('alat.update');
-    Route::delete('/alat/{id}', [AlatController::class, 'destroy'])->name('alat.destroy');
+    Route::get('/alat', [AlatController::class, 'index'])->name('alat.index');
+    Route::get('/alat/create', [alatController::class, 'create'])->name('alat.create');
+    Route::post('/alat/store', [alatController::class, 'store'])->name('alat.store');
+    Route::get('/alat/{id_alat}/edit', [alatController::class, 'edit'] )->name('alat.edit');
+    Route::put('/alat/{id_alat}', [alatController::class, 'update'] )->name('alat.update');
+    Route::delete('/alat/{id_alat}', [alatController::class, 'delete'] )->name('alat.delete');
+
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
+Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
+Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])->name('peminjaman.edit');
+Route::post('/peminjaman/{id}/update', [PeminjamanController::class, 'update'])->name('peminjaman.update');
+Route::post('/peminjaman/{id}/delete', [PeminjamanController::class, 'delete'])->name('peminjaman.delete');
 });
 
 /*
@@ -106,4 +113,3 @@ Route::group(['prefix' => 'siswa', 'middleware' => 'siswa'], function () {
 |     Route::get('/dashboard', [DashboardController::class, 'index']);
 | });
 */
-
