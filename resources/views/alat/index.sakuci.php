@@ -51,7 +51,7 @@
                             <th class="py-3 px-4" style="width: 7%;">No</th>
                             <th class="py-3">Informasi Alat</th>
                             <th class="py-3">Kode Perangkat</th>
-                            <th class="py-3">Kategori Lab</th>
+                            <th class="py-3">kategori lab</th>
                             <th class="py-3 text-center" style="width: 20%;">Aksi Cepat</th>
                         </tr>
                     </thead>
