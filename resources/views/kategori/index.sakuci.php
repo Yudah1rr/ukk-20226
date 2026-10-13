@@ -1,106 +1,69 @@
 @extends('layouts.app')
 
-@section('title', config('app.name') . ' -- Daftar Kategori Lab')
+@section('title', config('app.name') . ' -- Daftar Kategori')
 
 @section('content')
-<div class="container-xxl py-4">
+<div class="container-fluid py-4 px-4">
     
-    <!-- Top Header Banner -->
-    <div class="row align-items-center mb-4">
-        <div class="col-md-7">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-1 small">
-                    <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Dashboard</a></li>
-                    <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Kategori Lab</li>
-                </ol>
-            </nav>
-            <h2 class="fw-bold mb-0">Manajemen Kategori Laboratorium</h2>
+    <!-- Header Halaman & Tombol Tambah -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+        <div>
+            <h3 class="fw-bold mb-1 tracking-tight">Daftar Kategori</h3>
+            <p class="text-body-secondary small mb-0">Kelola data kategori alat inventaris.</p>
         </div>
-        <div class="col-md-5 text-md-end mt-3 mt-md-0">
-            <a href="{{ route('kategori.create') }}" class="btn btn-primary px-4 py-2.5 rounded-3 shadow-sm d-inline-flex align-items-center gap-2 fw-semibold">
-                <i class="bi bi-plus-circle-fill fs-5"></i> Tambah Kategori Baru
-            </a>
-        </div>
+        <a href="{{ route('kategori.create') }}" class="btn btn-primary btn-sm px-3 py-2 rounded-3 shadow-sm d-inline-flex align-items-center gap-2 fw-medium">
+            <i class="bi bi-plus-lg"></i>
+            <span>Tambah Kategori Baru</span>
+        </a>
     </div>
 
-    <!-- Main Card Container -->
+    <!-- Card Pembungkus Tabel yang Seragam -->
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-        
-        <!-- Filter / Search Mini Header -->
-        <div class="card-header py-3 px-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div class="d-flex align-items-center gap-2">
-                <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-3">
-                    <i class="bi bi-tags fs-5"></i>
-                </div>
-                <div>
-                    <h6 class="fw-bold mb-0">Total Kategori Lab</h6>
-                    <span class="text-muted small">Kelompok klasifikasi perangkat dan bahan laboratorium</span>
-                </div>
-            </div>
-            <div class="badge bg-secondary bg-opacity-10 text-body border px-3 py-2 rounded-pill fw-medium">
-                <i class="bi bi-database me-1 text-primary"></i> {{ $data->total() }} Kategori Tersedia
-            </div>
-        </div>
-
-        <!-- Table Wrapper -->
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="text-uppercase fs-7 text-muted fw-bold">
+                    <thead class="bg-body-tertiary border-bottom text-body-secondary text-uppercase fs-8 tracking-wider">
                         <tr>
-                            <th class="py-3 px-4" style="width: 7%;">No</th>
-                            <th class="py-3">Nama Kategori</th>
-                            <th class="py-3">Kode Kategori</th>
-                            <th class="py-3">Keterangan</th>
-                            <th class="py-3 text-center" style="width: 20%;">Aksi Cepat</th>
+                            <th class="py-3 px-4 text-center" style="width: 5%;">No</th>
+                            <th class="py-3 px-3">Nama Kategori</th>
+                            <th class="py-3 px-3">Kode Kategori</th>
+                            <th class="py-3 px-3">Keterangan</th>
+                            <th class="py-3 px-4 text-center" style="width: 180px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($data as $index => $kategoris)
+                        @php $no = 1; @endphp
+                        @forelse ($data as $kategoris)
                         <tr>
-                            <!-- Nomor (Mendukung Paginator Laravel) -->
-                            <td class="px-4 py-3">
-                                <span class="badge bg-secondary bg-opacity-10 text-body fw-bold px-2.5 py-2 rounded-2">
-                                    {{ $data->firstItem() + $index }}
+                            <td class="px-4 text-center text-body-secondary fw-medium fs-7">{{ $no++ }}</td>
+                            
+                            <td class="px-3">
+                                <div class="fw-semibold text-body fs-7">{{ $kategoris->nama_kategori }}</div>
+                            </td>
+
+                            <td class="px-3">
+                                <span class="badge bg-primary-subtle text-primary-emphasis border border-primary-subtle font-monospace fw-semibold px-2.5 py-1.5 rounded-2 fs-8">
+                                    {{ $kategoris->kode_kategori }}
                                 </span>
                             </td>
-                            
-                            <!-- Nama Kategori -->
-                            <td class="py-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; min-width: 38px;">
-                                        <i class="bi bi-tag-fill fs-6"></i>
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-bold mb-0">{{ $kategoris->nama_kategori }}</h6>
-                                        <span class="text-muted" style="font-size: 0.75rem;">ID Kategori: #{{ $kategoris->id_kategori }}</span>
-                                    </div>
-                                </div>
+
+                            <td class="px-3">
+                                <span class="text-body-secondary fs-7">{{ $kategoris->keterangan ?? '-' }}</span>
                             </td>
 
-                            <!-- Kode Kategori -->
-                            <td class="py-3">
-                                <code class="text-primary bg-primary bg-opacity-10 px-2.5 py-1 rounded-2 fw-semibold">
-                                    {{ $kategoris->kode_kategori }}
-                                </code>
-                            </td>
-
-                            <!-- Keterangan -->
-                            <td class="py-3 text-muted">
-                                {{ $kategoris->keterangan ?: 'Tidak ada keterangan tambahan.' }}
-                            </td>
-
-                            <!-- Tombol Aksi -->
-                            <td class="text-center py-3">
-                                <div class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('kategori.edit', ['kategori' => $kategoris->id_kategori]) }}" class="btn btn-outline-warning btn-sm px-3 py-1.5 rounded-2 fw-semibold d-inline-flex align-items-center gap-1" title="Edit Data">
+                            <td class="px-4 text-center">
+                                <div class="d-inline-flex align-items-center justify-content-center gap-2">
+                                    <!-- Tombol Edit -->
+                                    <a href="{{ route('kategori.edit', ['kategori' => $kategoris->id_kategori]) }}" class="btn btn-sm btn-outline-warning fw-semibold px-3 py-1.5 rounded-3 d-inline-flex align-items-center gap-1.5 fs-7 shadow-2xs" title="Edit">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </a>
-                                    <form action="{{ route('kategori.delete', ['id' => $kategoris->id_kategori]) }}" method="POST" class="d-inline">
+
+                                    <!-- Tombol Hapus -->
+                                    <form action="{{ route('kategori.delete', ['id' => $kategoris->id_kategori]) }}" method="POST" class="d-inline m-0" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger btn-sm px-3 py-1.5 rounded-2 fw-semibold d-inline-flex align-items-center gap-1" onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')" title="Hapus Data">
-                                            <i class="bi bi-trash3"></i> Hapus
+                                        <button type="submit" class="btn btn-sm btn-outline-danger fw-semibold px-3 py-1.5 rounded-3 d-inline-flex align-items-center gap-1.5 fs-7 shadow-2xs" title="Hapus">
+                                            <i class="bi bi-trash"></i> Hapus
                                         </button>
                                     </form>
                                 </div>
@@ -108,14 +71,10 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center py-5">
-                                <div class="py-4">
-                                    <div class="mb-3 text-muted opacity-50">
-                                        <i class="bi bi-folder2-open display-4"></i>
-                                    </div>
-                                    <h5 class="fw-bold text-secondary">Belum Ada Data Kategori</h5>
-                                    <p class="text-muted small mb-3">Silakan tambahkan data kategori terlebih dahulu melalui tombol di atas.</p>
-                                    <a href="{{ route('kategori.create') }}" class="btn btn-sm btn-primary px-3 rounded-pill">Tambah Sekarang</a>
+                            <td colspan="5" class="text-center py-5 text-body-secondary">
+                                <div class="d-flex flex-column align-items-center gap-2">
+                                    <i class="bi bi-inbox fs-2 opacity-50"></i>
+                                    <span class="fs-7">Belum ada data kategori yang ditambahkan.</span>
                                 </div>
                             </td>
                         </tr>
@@ -124,18 +83,14 @@
                 </table>
             </div>
         </div>
-
-        <!-- Pagination Footer -->
-        @if($data->hasPages())
-        <div class="card-footer py-3 px-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 border-top">
-            <div class="text-muted small">
-                Menampilkan <span class="fw-bold text-body">{{ $data->firstItem() ?? 0 }}</span> sampai <span class="fw-bold text-body">{{ $data->lastItem() ?? 0 }}</span> dari total <span class="fw-bold text-body">{{ $data->total() }}</span> data
-            </div>
-            <div>
-                {!! $data->links() !!}
-            </div>
+        
+        <!-- Bagian Pagination -->
+        @if(method_exists($data, 'hasPages') && $data->hasPages())
+        <div class="card-footer bg-transparent py-3 border-top-0 d-flex justify-content-end">
+            {!! $data->links() !!}
         </div>
         @endif
     </div>
+
 </div>
 @endsection

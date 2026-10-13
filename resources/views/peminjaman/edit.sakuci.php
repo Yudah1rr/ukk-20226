@@ -1,66 +1,57 @@
 @extends('layouts.app')
 
+@section('title', config('app.name') . ' -- Edit Alat')
+
 @section('content')
-<div class="container">
-    <h2>Edit Data Peminjaman</h2>
+<div class="container-fluid py-4">
     
-    <form action="{{ route('peminjaman.update', $data->id_peminjaman) }}" method="POST">
-        @csrf
-        
-        <div class="mb-3">
-            <label for="id_user" class="form-label">Pilih User / Peminjam</label>
-            <select name="id_user" id="id_user" class="form-control" required>
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}" {{ $data->id_user == $user->id ? 'selected' : '' }}>
-                        {{ $user->nama }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+    <!-- Header Halaman -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="mb-4">
+                <h2 class="fw-bold mb-1">Edit Data Alat</h2>
+                <p class="text-muted small mb-0">Perbarui informasi data alat di bawah ini dengan benar.</p>
+            </div>
 
-        <div class="mb-3">
-            <label for="id_alat" class="form-label">Pilih Alat</label>
-            <select name="id_alat" id="id_alat" class="form-control" required>
-                @foreach($alat as $item)
-                    <option value="{{ $item->id }}" {{ $data->id_alat == $item->id ? 'selected' : '' }}>
-                        {{ $item->nama_alat }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+            <!-- Card Pembungkus Form -->
+            <div class="card border shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <form action="{{ route('alat.update', ['id_alat' => $datal->id_alat]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
 
-        <div class="mb-3">
-            <label for="jumlah" class="form-label">Jumlah</label>
-            <input type="number" name="jumlah" id="jumlah" class="form-control" value="{{ $data->jumlah }}" min="1" required>
-        </div>
+                        <div class="mb-3">
+                            <label for="nama_alat" class="form-label fw-semibold">Nama Alat</label>
+                            <input type="text" name="nama_alat" id="nama_alat" class="form-control" value="{{ $datal->nama_alat }}" placeholder="Masukkan nama alat..." required>
+                        </div>
 
-        <div class="mb-3">
-            <label for="tanggal_pinjam" class="form-label">Tanggal Pinjam</label>
-            <input type="date" name="tanggal_pinjam" id="tanggal_pinjam" class="form-control" value="{{ $data->tanggal_pinjam }}" required>
-        </div>
+                        <div class="mb-3">
+                            <label for="kode_alat" class="form-label fw-semibold">Kode Alat</label>
+                            <input type="text" name="kode_alat" id="kode_alat" class="form-control" value="{{ $datal->kode_alat }}" placeholder="Contoh: ALT-01..." required>
+                        </div>
 
-        <div class="mb-3">
-            <label for="tanggal_kembali" class="form-label">Tanggal Kembali (Aktual)</label>
-            <input type="date" name="tanggal_kembali" id="tanggal_kembali" class="form-control" value="{{ $data->tanggal_kembali }}">
-        </div>
+                        <div class="mb-4">
+                            <label for="id_kategori" class="form-label fw-semibold">Kategori</label>
+                            <select name="id_kategori" id="id_kategori" class="form-select" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                @foreach ($kategori as $k)
+                                    <option value="{{ $k->id_kategori }}" {{ $datal->id_kategori == $k->id_kategori ? 'selected' : '' }}>
+                                        {{ $k->nama_kategori }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
-        <div class="mb-3">
-            <label for="status" class="form-label">Status</label>
-            <select name="status" id="status" class="form-control" required>
-                <option value="Pending" {{ $data->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                <option value="Disetujui" {{ $data->status == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
-                <option value="Ditolak" {{ $data->status == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
-                <option value="Dikembalikan" {{ $data->status == 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
-            </select>
-        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ route('alat.index') }}" class="btn btn-outline-secondary px-4">Kembali</a>
+                            <button type="submit" class="btn btn-primary px-4 shadow-sm">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-        <div class="mb-3">
-            <label for="denda" class="form-label">Denda (Rp)</label>
-            <input type="number" name="denda" id="denda" class="form-control" value="{{ $data->denda }}" min="0">
         </div>
+    </div>
 
-        <button type="submit" class="btn btn-success">Update Data</button>
-        <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary">Kembali</a>
-    </form>
 </div>
 @endsection
