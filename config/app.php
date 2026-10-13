@@ -31,6 +31,8 @@ return [
     ],
 
     'middleware' => [
+        'peminjam' => App\Middleware\PeminjamOnly::class,
+        'petugas' => App\Middleware\PetugasOnly::class,
         'siswa' => App\Middleware\SiswaOnly::class,
         'auth'  => App\Middleware\Authenticate::class,
         'guest' => App\Middleware\RedirectIfAuthenticated::class,
